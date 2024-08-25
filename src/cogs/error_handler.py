@@ -22,7 +22,7 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     tb_string = "".join(tb_list)
 
     # Build the error message
-    update_str = update.to_dict() if isinstance(update, Update) else str(update)
+    # update_str = update.to_dict() if isinstance(update, Update) else str(update)
     message = (
         "An exception was raised while handling an update\n"
         # f"<pre>update = {html.escape(json.dumps(update_str, indent=2, ensure_ascii=False))}"
@@ -36,6 +36,7 @@ async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     await context.bot.send_message(chat_id=USER_ID, text=message, parse_mode="HTML")
 
     # Send error message in chat
-    await update.message.reply_text(
-        "An error occurred while processing the request. Please check the logs."
-    )
+    if update.message is not None:
+        await update.message.reply_text(
+            "An error occurred while processing the request. Please check the logs."
+        )

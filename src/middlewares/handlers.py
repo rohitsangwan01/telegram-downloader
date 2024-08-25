@@ -46,3 +46,6 @@ def callback_query_handler():
         return CallbackQueryHandler(callback=f)
 
     return inner_decorator
+
+def any_message(f: Callable[[Update, ApplicationContext], Coroutine[Any, Any, Any]]):
+    return MessageHandler(filters=filters.ALL, callback=f)
